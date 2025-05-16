@@ -75,3 +75,6 @@ Syntax breakdown, line by line:
     -   Show other methods that 'work', but are messy.
 
 -   Detailed information can be found in the `R` documentation [here](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Control.html)
+
+
+# temporary line for git bash testing
