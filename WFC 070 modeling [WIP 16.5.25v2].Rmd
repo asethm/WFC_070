@@ -1,0 +1,77 @@
+---
+title: "modeling (conditionals, loops)"
+output: html_document
+date: "2025-05-09"
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+```
+
+## Motivation: why learn conditionals, etc?
+
+Loops (`for` statements), conditional statements (`if` and `else` statements), and writing functions are some of the most utilized purposes of `R` for ecologists. On their own, loops and conditional statements are great for speeding up tasks like processing data. When combined, they lay the groundwork for ecological modeling, an immensely powerful tool that is used in the real world to inform policy and guide management decisions. Loops and conditional statements can get lengthy, so writing your own function can help streamline coding by not needing to copy and paste large code chunks, while also helping you understand the arguments and parameters of the systems you're studying.
+
+## Loops in `R` (`for` statements)
+
+Loops, conditionals, and writing functions all include using curly braces: `{}`. They indicate where a function starts and ends, and they require specific syntax. For example, suppose I have been doing Mallard point count surveys in the UC Davis Arboretum.
+
+```{r}
+# point count surveys of Mallards in the Arboretum
+duck_count <- c(13, 8, 13, 12, 10)
+```
+
+After gathering this data, I learn that the project I am gathering data for is interested in the duckling data, and not the adults. I observed 2 adult ducks every day, and a variable number of ducklings. I could manually edit the counts myself, or I could employ a loop to do that for me.
+
+```{r}
+# manual fix: I can manually change 
+duckling_count_manual <- c(11, 6, 11, 10, 8)
+```
+
+Manual edits like this work with small data sets, but become tedious if not impossible when working with larger data sets.
+
+```{r}
+# OR, I could use a `for` loop
+
+duckling_count_loop <- numeric(length(duck_count))
+
+for(i in 1:length(duck_count)) {
+  
+  duckling_count_loop[i] <- duck_count[i] - 2
+  
+  print(duckling_count_loop[i])
+  
+}
+```
+
+Syntax breakdown, line by line:
+
+-   `duckling_count_loop <- numeric(length(duck_count))`
+    
+    -   This line makes an empty vector, `duckling_count_loop`, the length of `duck_count`. Objects cannot be made within a loop, so we need to make it beforehand.
+    
+    -   Note: while assigning a new vector to be all 0s in the length of the object we're iterating through is common practice, the new vector only needs to *exist* under the correct data format (in our case, a number). For example, if the line instead read `duckling_count_loop <- 1`, the loop would still function.
+
+-   `for(i in 1:length(duck_count)) {`
+
+    -   `for` is a [reserved word](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Reserved.html) - a special statement with a hard-coded function. This means it cannot be assigned to values, lists, etc
+
+        -   Your turn: try running `for <- 1`. What happens?
+
+    -   `i` is the variable you want to iterate through with the loop. Your variable does not need to be `i`, but `i` is common for loops concerning counted numbers. Another common iterating variable is `t` when dealing with time data.
+
+    -   Verbally, this line reads "for (`for(`) each entry in `duck_count` (`i in 1:length(duck_count)) {`)..."
+
+-   `duckling_count_loop[i] <- duck_count[i] - 2`
+
+    -   .
+
+-   Note specific syntax of `{}` and spacing for easy reading
+
+    -   Show other methods that 'work', but are messy.
+
+-   Detailed information can be found in the `R` documentation [here](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Control.html)
